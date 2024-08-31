@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<div class="w3-border">
+    <div id="progressbar" class="w3-blue" style="height:24px;width:0%"></div>
+  </div>
+
+<ul id="stream">
+    <li>test</li>
+</ul>
+
+<script>
+    const list = document.getElementById("stream");
+    const pbar = document.getElementById("progressbar");
+    let newElement = document.createElement("li");
+    newElement.textContent = "message: " + "Hello World!";
+    list.appendChild(newElement);
+    
+    const eventSrc = new EventSource("http://127.0.0.1:8000/stream");
+    eventSrc.onmessage = function(e) {
+        let newElement = document.createElement("li");
+        newElement.textContent = "message: " + e.data;
+        console.log(e.data);
+        pbar.style.width = e.data + "%";
+        list.appendChild(newElement);
+    };
+</script>
